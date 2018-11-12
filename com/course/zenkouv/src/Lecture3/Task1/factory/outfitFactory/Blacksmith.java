@@ -31,7 +31,7 @@ public class Blacksmith {
                 return ARMOR_FACTORY;
             }
             default: {
-                throw new IllegalArgumentException("It's illegal outfit type " + outfitType.toString().toLowerCase());
+                throw new IllegalArgumentException("It's illegal outfit type " + outfitType.getClass());
             }
         }
     }

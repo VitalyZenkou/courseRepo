@@ -2,11 +2,17 @@ package Lecture3.Task2.util.helper;
 
 import Lecture3.Task2.Student;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StudentStreamHelper implements IStudentHelper {
+
+    @Override
+    public List<Student> sortStudentsByAge(List<Student> students) {
+        return students.stream().sorted(Comparator.comparingInt(Student::getAge)).collect(Collectors.toList());
+    }
 
     @Override
     public double getAvgAge(List<Student> students) {

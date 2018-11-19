@@ -7,7 +7,6 @@ import Lecture3.Task2.util.helper.IStudentHelper;
 import Lecture3.Task2.util.helper.StudentHelper;
 import Lecture3.Task2.util.helper.ViewHelper;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +17,15 @@ class StudentApp {
     private static final int ID = 17;
     private static final IStudentFilter FILTER = new StudentFilter();
     private static final IStudentHelper HELPER = new StudentHelper();
-    private static List<Student> students;
-    private static Map<Integer, Student> studentMap;
 
     public static void main(String[] args) {
-        students = StudentFactory.createRandomStudentList(LIST_SIZE);
+        List<Student> students = StudentFactory.createRandomStudentList(LIST_SIZE);
         ViewHelper.printStudents(students);
-        students.sort(Comparator.comparingInt(Student::getAge));
+        students = HELPER.sortStudentsByAge(students);
         ViewHelper.printStudents(students);
         System.out.printf("The average age = %.2f\n", HELPER.getAvgAge(students));
         ViewHelper.printStudents(FILTER.findStudentsByLastNameFirstLetter(students, LETTER));
-        studentMap = HELPER.getStudentsAsMap(students);
+        Map<Integer, Student> studentMap = HELPER.getStudentsAsMap(students);
         ViewHelper.printStudents(studentMap);
         studentMap = FILTER.findStudentsById(studentMap, ID);
         ViewHelper.printStudents(studentMap);

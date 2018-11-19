@@ -1,7 +1,6 @@
 package Lecture3.Task1.util.helper;
 
 import Lecture3.Task1.model.Outfit;
-import Lecture3.Task1.util.filter.OutfitFilter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,14 +12,16 @@ public class OutfitHelper {
     }
 
     public static List<Outfit> compareOutfitsByCost(List<Outfit> outfits) {
-        List<Outfit> outfitsSortedByCost = new ArrayList<>(outfits);
-        outfitsSortedByCost.sort(Comparator.comparingInt(Outfit::getCost));
-        return outfitsSortedByCost;
+        return compareByParams(outfits, Comparator.comparingInt(Outfit ::getCost));
     }
 
     public static List<Outfit> compareOutfitsByWeight(List<Outfit> outfits) {
-        List<Outfit> outfitsSortedByWeight = new ArrayList<>(outfits);
-        outfitsSortedByWeight.sort(Comparator.comparingDouble(Outfit::getWeight));
-        return outfitsSortedByWeight;
+        return compareByParams(outfits, Comparator.comparingDouble(Outfit ::getWeight));
+    }
+
+    private static List<Outfit> compareByParams(List<Outfit> outfits, Comparator comparator){
+        List<Outfit> compareOutfits = new ArrayList<>(outfits);
+        compareOutfits.sort(comparator);
+        return compareOutfits;
     }
 }

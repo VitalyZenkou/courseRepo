@@ -7,6 +7,8 @@ import java.util.Map;
 
 public interface IStudentHelper {
 
+    List<Student> sortStudentsByAge(List<Student> students);
+
     double getAvgAge(List<Student> students);
 
     Map<Integer, Student> getStudentsAsMap(List<Student> students);

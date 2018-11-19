@@ -13,12 +13,15 @@ public class ArmorResolver implements OutfitResolver {
             if (knightOutfit instanceof Armor) {
                 if (knightOutfit.getType() == outfit.getType()) {
                     System.out.printf("I have a %s and me don't need any %s!\n",
-                            (knightOutfit).getType().toString().toLowerCase(),
-                            (knightOutfit).getType().toString().toLowerCase());
+                            getOutfitType(knightOutfit), getOutfitType(knightOutfit));
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private String getOutfitType(Outfit outfit) {
+        return outfit.getType().toString().toLowerCase();
     }
 }

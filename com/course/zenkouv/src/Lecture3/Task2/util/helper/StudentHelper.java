@@ -7,6 +7,13 @@ import java.util.*;
 public class StudentHelper implements IStudentHelper {
 
     @Override
+    public List<Student> sortStudentsByAge(List<Student> students) {
+        List<Student> sortedStudents = new ArrayList<>(students);
+        sortedStudents.sort(Comparator.comparingInt(Student::getAge));
+        return sortedStudents;
+    }
+
+    @Override
     public double getAvgAge(List<Student> students) {
         double avgAge = 0;
         for (Student student : students) {

@@ -5,12 +5,18 @@ import Lecture3.Task1.model.Outfit;
 import Lecture3.Task1.util.calculator.OutfitCalculator;
 import Lecture3.Task1.util.filter.OutfitFilter;
 import Lecture3.Task1.util.helper.OutfitHelper;
+import Lecture4.Task2.factory.OutfitReaderFactory;
+import Lecture4.Task2.factory.WriterFactory;
+import Lecture4.Task2.util.operation.FileOperation;
+import Lecture4.Task2.util.writer.CustomWriter;
 
+import java.io.IOException;
 import java.util.List;
 
 class KnightApp {
 
     private static final Knight ARTUR = KnightFactory.createEquippedKnight("Artur");
+    private static final Knight LANCELOT = new Knight("Lancelot");
     private static final int MAX_COST = 100;
     private static final int MIN_COST = 30;
     private static final int MIN_DAMAGE = 100;
@@ -27,6 +33,24 @@ class KnightApp {
         ARTUR.setOutfits(OutfitHelper.compareOutfitsByWeight(ARTUR.getOutfits()));
         printKnight(ARTUR);
         printOutfitsByMinToMaxParams(ARTUR.getOutfits());
+
+        try {
+            WriterFactory writerFactory = new WriterFactory();
+            FileOperation.writeOutfitsToFile(writerFactory, ARTUR.getOutfits());
+
+            OutfitReaderFactory readerFactory = new OutfitReaderFactory();
+            FileOperation.renameAndMoveFile(writerFactory);
+            LANCELOT.setOutfits(FileOperation.readOutfitsFromFile(readerFactory));
+
+            CustomWriter messageWriter = writerFactory.getSimpleWriter();
+
+            messageWriter.write(LANCELOT.toString());
+            messageWriter.write(ARTUR.toString());
+            FileOperation.renameAndMoveFile(writerFactory);
+            FileOperation.deleteFiles(writerFactory);
+        } catch (IOException e) {
+            System.out.println("The writer wasn't created!");
+        }
     }
 
     private static void printKnight(Knight knight) {

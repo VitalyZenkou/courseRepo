@@ -1,5 +1,7 @@
 package Lecture3.Task1.model;
 
+import Lecture4.task1.exeption.OutfitTypeMissMatchException;
+
 public enum OutfitType {
 
     HELM(3, 1, 1), BOOTS(5, 1.5, 2), GLOVES(8, 1.8, 2), SHIELD(10, 3, 3), PANTS(13, 3.3, 3), MAIL(20, 4.2, 5),
@@ -25,5 +27,14 @@ public enum OutfitType {
 
     public int getSpecificOptionRatio() {
         return specificOptionRatio;
+    }
+
+    public static OutfitType getOutfitType(String outfitType) {
+        for (OutfitType type : values()) {
+            if (type.toString().equals(outfitType)) {
+                return type;
+            }
+        }
+        throw new OutfitTypeMissMatchException("Not existing outfit type " + outfitType);
     }
 }

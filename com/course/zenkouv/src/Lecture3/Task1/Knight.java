@@ -1,9 +1,7 @@
 package Lecture3.Task1;
 
 import Lecture3.Task1.factory.ResolverFactory;
-import Lecture3.Task1.model.Armor;
 import Lecture3.Task1.model.Outfit;
-import Lecture3.Task1.model.Weapon;
 import Lecture3.Task1.resolver.OutfitResolver;
 
 import java.util.ArrayList;
@@ -37,6 +35,10 @@ public class Knight {
         }
     }
 
+    public void removeOutfit(Outfit outfit) {
+            outfits.remove(outfit);
+    }
+
     private boolean outfitChecker(Outfit outfit) {
         OutfitResolver resolver = ResolverFactory.getResolver(outfit);
         return resolver.resolve(outfits, outfit);
@@ -44,6 +46,6 @@ public class Knight {
 
     @Override
     public String toString() {
-        return String.format("My name is %s and i have next outfits:\n%s\nTotal cost: %d", name, outfits, outfitsCost);
+        return String.format("My name is %s and i have next outfits:\n%s\nTotal cost: %d\n", name, outfits, outfitsCost);
     }
 }

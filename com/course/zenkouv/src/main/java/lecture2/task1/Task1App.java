@@ -30,7 +30,7 @@ public class Task1App {
     }
 
     private static void printAllWords(String sentence) {
-        String[] words = " ".split(sentence);
+        String[] words = sentence.split(" ");
         for (String word : words) {
             System.out.println(word);
         }

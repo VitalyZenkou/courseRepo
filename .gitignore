@@ -2,6 +2,6 @@
 *.iml
 out/
 *.txt
-=======
-out/
->>>>>>> Lecture 3 task 1 - 4
+.gradle
+
+

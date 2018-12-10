@@ -7,26 +7,37 @@ import org.testng.annotations.Test;
 
 public class CalculatorTest {
 
-    private final Operation operation = new Operation();
+    private Operation operation;
 
-    @Test(dataProvider = "additionOperationData")
+    @Test
+    public void createOperation() {
+        operation = new Operation();
+        Assert.assertNotNull(operation);
+    }
+
+    @Test(dataProvider = "additionOperationData", dependsOnMethods = "createOperation")
     public void testAdditionOperation(double variable1, double variable2, double expectedResult) {
         Assert.assertEquals(operation.addition(variable1, variable2), expectedResult);
     }
 
-    @Test(dataProvider = "subtractionOperationData")
-    public void testSubtractionOperation(double variable1, double variable2, double expectedResult){
-        Assert.assertEquals(operation.subtraction(variable1,variable2),expectedResult);
+    @Test(dataProvider = "subtractionOperationData", dependsOnMethods = "createOperation")
+    public void testSubtractionOperation(double variable1, double variable2, double expectedResult) throws InterruptedException {
+        Thread.sleep(10000);
+        Assert.assertEquals(operation.subtraction(variable1, variable2), expectedResult);
     }
 
-    @Test(dataProvider = "divisionOperationData")
-    public void testDivisionOperation(double variable1, double variable2, double expectedResult){
-        Assert.assertEquals(operation.division(variable1,variable2),expectedResult);
+    @Test(dataProvider = "divisionOperationData", dependsOnMethods = "createOperation")
+    public void testDivisionOperation(double variable1, double variable2, double expectedResult) {
+        if (variable2 != 0) {
+            Assert.assertEquals(operation.division(variable1, variable2), expectedResult);
+        } else {
+            Assert.assertThrows(ArithmeticException.class, () -> operation.division(variable1, variable2));
+        }
     }
 
-    @Test(dataProvider = "multiplyOperationData")
-    public void testMultiplyOperation(double variable1, double variable2, double expectedResult){
-        Assert.assertEquals(operation.multiply(variable1,variable2),expectedResult);
+    @Test(dataProvider = "multiplyOperationData", dependsOnMethods = "createOperation")
+    public void testMultiplyOperation(double variable1, double variable2, double expectedResult) {
+        Assert.assertEquals(operation.multiply(variable1, variable2), expectedResult);
     }
 
     @DataProvider(name = "additionOperationData")
@@ -37,7 +48,7 @@ public class CalculatorTest {
         };
     }
 
-    @DataProvider(name = "subtractionOperationData")
+    @DataProvider(name = "subtractionOperationData", parallel = true)
     private Object[][] dataForSubtractionOperation() {
         return new Object[][]{
                 {11.0, 5, 6},
@@ -48,8 +59,8 @@ public class CalculatorTest {
     @DataProvider(name = "divisionOperationData")
     private Object[][] dataForDivisionOperation() {
         return new Object[][]{
-                {11.0, 5, 2.2},
-                {55, 11, 5}
+                {11.0, 5, 2.2,},
+                {1, 0, 0}
         };
     }
 
@@ -57,7 +68,7 @@ public class CalculatorTest {
     private Object[][] dataForMultiplyOperation() {
         return new Object[][]{
                 {11.0, 5, 55},
-                {3, 7, 21}
+                {3.1, 7, 21.7}
         };
     }
 }

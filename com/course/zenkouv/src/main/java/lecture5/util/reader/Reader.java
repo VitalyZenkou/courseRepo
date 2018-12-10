@@ -18,6 +18,8 @@ public class Reader {
             number = SCANNER.next();
             if (ExpressionValidator.isNumber(number)) {
                 return Double.valueOf(number);
+            } else {
+                System.out.println("You entered wrong variable - " + number);
             }
         }
     }
@@ -29,17 +31,21 @@ public class Reader {
             sign = SCANNER.next();
             if (ExpressionValidator.isSign(sign)) {
                 return sign;
+            } else {
+                System.out.println("You entered wrong sign - " + sign);
             }
         }
     }
 
-    public static String readWord(){
+    public static String readWord() {
         String word;
-        while (true){
+        while (true) {
             System.out.print("quit for exit or any symbol for continue: ");
             word = SCANNER.next();
-            if(ExpressionValidator.isWord(word)){
+            if (ExpressionValidator.isWord(word)) {
                 return word;
+            } else {
+                System.out.println("You entered wrong keyword for exit - " + word);
             }
         }
     }

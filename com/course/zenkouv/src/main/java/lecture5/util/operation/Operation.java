@@ -12,11 +12,9 @@ public class Operation {
 
     public double division(double x, double y) {
         if (y == 0) {
-            System.out.println("Trying to divide by 0!");
-            return x;
-        } else {
-            return x / y;
+            throw new ArithmeticException("Try to separate by zero!");
         }
+        return x / y;
     }
 
     public double multiply(double x, double y) {

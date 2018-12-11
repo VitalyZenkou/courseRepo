@@ -2,6 +2,7 @@ package calculator;
 
 import lecture5.util.operation.Operation;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -9,33 +10,33 @@ public class CalculatorTest {
 
     private Operation operation;
 
-    @Test
+    @BeforeClass
     public void createOperation() {
         operation = new Operation();
         Assert.assertNotNull(operation);
     }
 
-    @Test(dataProvider = "additionOperationData", dependsOnMethods = "createOperation")
+    @Test(dataProvider = "additionOperationData")
     public void testAdditionOperation(double variable1, double variable2, double expectedResult) {
         Assert.assertEquals(operation.addition(variable1, variable2), expectedResult);
     }
 
-    @Test(dataProvider = "subtractionOperationData", dependsOnMethods = "createOperation")
+    @Test(dataProvider = "subtractionOperationData")
     public void testSubtractionOperation(double variable1, double variable2, double expectedResult) throws InterruptedException {
-        Thread.sleep(10000);
         Assert.assertEquals(operation.subtraction(variable1, variable2), expectedResult);
     }
 
-    @Test(dataProvider = "divisionOperationData", dependsOnMethods = "createOperation")
+    @Test(dataProvider = "divisionOperationData")
     public void testDivisionOperation(double variable1, double variable2, double expectedResult) {
-        if (variable2 != 0) {
-            Assert.assertEquals(operation.division(variable1, variable2), expectedResult);
-        } else {
-            Assert.assertThrows(ArithmeticException.class, () -> operation.division(variable1, variable2));
-        }
+        Assert.assertEquals(operation.division(variable1, variable2), expectedResult);
     }
 
-    @Test(dataProvider = "multiplyOperationData", dependsOnMethods = "createOperation")
+    @Test(dataProvider = "divisionByZeroOperationData")
+    public void testDivisionByZeroOperation(double variable1, double variable2) {
+        Assert.assertThrows(ArithmeticException.class, () -> operation.division(variable1, variable2));
+    }
+
+    @Test(dataProvider = "multiplyOperationData")
     public void testMultiplyOperation(double variable1, double variable2, double expectedResult) {
         Assert.assertEquals(operation.multiply(variable1, variable2), expectedResult);
     }
@@ -59,8 +60,16 @@ public class CalculatorTest {
     @DataProvider(name = "divisionOperationData")
     private Object[][] dataForDivisionOperation() {
         return new Object[][]{
-                {11.0, 5, 2.2,},
-                {1, 0, 0}
+                {11.0, 5, 2.2},
+                {1, 1, 1}
+        };
+    }
+
+    @DataProvider(name = "divisionByZeroOperationData")
+    private Object[][] dataForDivisionByZeroOperation() {
+        return new Object[][]{
+                {11.0, 0},
+                {1, 0}
         };
     }
 

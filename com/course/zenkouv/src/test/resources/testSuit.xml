@@ -2,7 +2,8 @@
 <suite name="Test Suit">
     <test name="DemoTest" parallel="methods" thread-count="1">
         <classes>
-            <class name="calculator.CalculatorTest"/>
+            <class name="test.calculator.CalculatorTest"/>
+            <class name="test.webDriverTest.OnlinerTest"/>
         </classes>
     </test>
 </suite>

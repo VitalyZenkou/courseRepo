@@ -1,13 +1,14 @@
 package webDriver.pageObject.onliner;
 
-import webDriver.constant.OnlinerLocators;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+import webDriver.constant.OnlinerLocators;
 
-public class Auth extends Page {
+public class LoginPage extends Page {
 
     @FindBy(css = OnlinerLocators.LOGIN_FIELD_CSS)
     private WebElement loginField;
@@ -18,15 +19,16 @@ public class Auth extends Page {
     @FindBy(css = OnlinerLocators.AUTH_SUBMIT_BUTTON_CSS)
     private WebElement submitButton;
 
-    public Auth(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(super.driver, this);
     }
 
-    public boolean authorization(String login, String password) {
+    public CatalogPage login(String login, String password) {
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
         submitButton.click();
-        return isElementPresent(By.className(OnlinerLocators.PROFILE_CLASS_NAME));
+        Assert.assertTrue(isElementPresent(By.className(OnlinerLocators.PROFILE_CLASS_NAME)),"Authorization failed!");
+        return new CatalogPage(super.driver);
     }
 }

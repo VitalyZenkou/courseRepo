@@ -23,16 +23,19 @@ public class OnlinerTest {
 
     @Test
     public void productAddedToCart() {
-        CatalogOnliner catalog = new CatalogOnliner(chromeDriver);
-        Assert.assertEquals(catalog.getPageTitle(), "Каталог Onliner.by");
-        Assert.assertTrue(catalog.openAuthPage().authorization(login, password), "Authorization failed!");
-        Assert.assertTrue(catalog.goToCart().isCleanedCart(), "Cart wasn't cleaned!");
-        Category category = catalog.goToCategory();
-        Product product = category.chooseRandomAvailableProduct();
-        Offers offers = product.getOffers();
-        offers.addProductToCart();
-        Cart cart = catalog.goToCart();
-        Assert.assertTrue(cart.addedToCart(), "A product wasn't added to cart!");
+        CatalogPage catalogPage = new CatalogPage(chromeDriver);
+        Assert.assertEquals(catalogPage.getPageTitle(), "Каталог Onliner.by");
+        LoginPage loginPage = catalogPage.openLoginPage();
+        catalogPage = loginPage.login(login,password);
+        CartPage cart = catalogPage.goToCart();
+        cart.cleanCart();
+        Assert.assertTrue(cart.isEmptyCart(), "CartPage wasn't cleaned!");
+        CategoryPage categoryPage = catalogPage.goToCategory();
+        ProductPage productPage = categoryPage.chooseRandomAvailableProduct();
+        OffersPage offersPage = productPage.getOffers();
+        offersPage.addRandomProductToCart();
+        CartPage cartPage = catalogPage.goToCart();
+        Assert.assertFalse(cartPage.isEmptyCart(), "A productPage wasn't added to cartPage!");
     }
 
     @AfterClass

@@ -22,11 +22,11 @@ public abstract class Page {
         wait = new FluentWait<>(driver).withTimeout(waitTime).pollingEvery(interval).ignoring(NoSuchElementException.class);
     }
 
-    public boolean isElementPresent(By locator) {
+    protected boolean isElementPresent(By locator) {
         return driver.findElements(locator).size() > 0;
     }
 
-    public void moveTo(WebElement element) {
+    protected void moveTo(WebElement element) {
         Actions action = new Actions(driver);
         action.moveToElement(element).build().perform();
     }
@@ -35,7 +35,7 @@ public abstract class Page {
         return driver.getTitle();
     }
 
-    public WebElement findElementWithWait(By locator){
+    protected WebElement findElementWithWait(By locator) {
         return wait.until(webDriver -> driver.findElement(locator));
     }
 }

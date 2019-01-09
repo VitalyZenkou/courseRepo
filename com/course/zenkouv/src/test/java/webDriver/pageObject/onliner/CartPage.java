@@ -11,40 +11,33 @@ import webDriver.constant.OnlinerLocators;
 
 import java.util.List;
 
-public class Cart extends Page {
+public class CartPage extends Page {
 
     @FindBy(className = OnlinerLocators.CART_PRODUCT_CLASS_NAME)
     private List<WebElement> products;
 
-    public Cart(WebDriver driver) {
+    public CartPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(super.driver, this);
     }
 
-    public boolean addedToCart() {
-        return !isEmptyCart();
+    public boolean isEmptyCart() {
+        return !isElementPresent(By.className(OnlinerLocators.TRASH_CLASS_NAME));
     }
 
-    public boolean isCleanedCart() {
+    public void cleanCart() {
         if (!products.isEmpty()) {
-            products.forEach(product ->
-            {
+            products.forEach(product -> {
                 product.findElement(By.className(OnlinerLocators.TRASH_CLASS_NAME)).click();
                 (new WebDriverWait(super.driver, 1)).until(ExpectedConditions.invisibilityOf(product));
             });
             leaveCart();
-            return true;
         } else {
             leaveCart();
-            return isEmptyCart();
         }
     }
 
     private void leaveCart() {
         super.driver.navigate().back();
-    }
-
-    private boolean isEmptyCart() {
-        return !isElementPresent(By.className(OnlinerLocators.TRASH_CLASS_NAME));
     }
 }

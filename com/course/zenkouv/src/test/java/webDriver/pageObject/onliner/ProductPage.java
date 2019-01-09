@@ -6,18 +6,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import webDriver.constant.OnlinerLocators;
 
-public class Product extends Page {
+public class ProductPage extends Page {
 
     @FindBy(className = OnlinerLocators.OFFERS_BUTTON_CLASS_NAME)
     private WebElement offersButton;
 
-    public Product(WebDriver driver) {
+    public ProductPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(super.driver, this);
     }
 
-    public Offers getOffers() {
+    public OffersPage getOffers() {
         offersButton.click();
-        return new Offers(super.driver);
+        return new OffersPage(super.driver);
     }
 }

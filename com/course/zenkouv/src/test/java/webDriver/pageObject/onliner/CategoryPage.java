@@ -7,17 +7,17 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import webDriver.constant.OnlinerLocators;
-import webDriver.util.filter.ProductFilter;
+import webDriver.util.filter.ElementFilter;
 import webDriver.util.random.WebDriverRandomUtils;
 
 import java.util.List;
 
-public class Category extends Page {
+public class CategoryPage extends Page {
 
     @FindAll({@FindBy(className = OnlinerLocators.PRODUCT_CLASS_NAME)})
     private List<WebElement> products;
 
-    public Category(WebDriver driver) {
+    public CategoryPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(super.driver, this);
     }
@@ -26,11 +26,11 @@ public class Category extends Page {
         return products;
     }
 
-    public Product chooseRandomAvailableProduct() {
-        List<WebElement> availableProducts = ProductFilter.getAvailableProducts(products);
+    public ProductPage chooseRandomAvailableProduct() {
+        List<WebElement> availableProducts = ElementFilter.getAvailableElements(products, By.className(OnlinerLocators.PRODUCT_PRICE_CLASS_NAME));
         WebElement product = WebDriverRandomUtils.getRandomWebElement(availableProducts, "There isn't any product!");
         moveTo(product);
         product.findElement(By.xpath(OnlinerLocators.PRODUCT_TITLE_XPATH)).click();
-        return new Product(driver);
+        return new ProductPage(driver);
     }
 }
